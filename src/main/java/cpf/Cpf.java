@@ -12,6 +12,9 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -213,11 +216,51 @@ public class Cpf {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Sobre o Gerador de CPF");
 		mntmNewMenuItem.setFont(new Font("Arial", 0, 16));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Desenvolvido por Iris Guedes / 2023", "Sobre o Gerador de CPF",
-						-1);
-			}
-		});
+		    public void actionPerformed(ActionEvent e) {
+		       
+		        JPanel panel = new JPanel();
+		        panel.setLayout(new BoxLayout(panel, javax.swing.BoxLayout.Y_AXIS));
+		       
+		        addLinkWithCopyButton(panel, "GitHub", "https://github.com/wirisguedes");
+		        addLinkWithCopyButton(panel, "LinkedIn", "https://www.linkedin.com/in/irisguedes");
+		        addLinkWithCopyButton(panel, "YouTube", "https://www.youtube.com/@irisguedes4995");
+		     
+		        JOptionPane.showMessageDialog(
+		            null,
+		            panel,
+		            "Sobre o Gerador de CPF",
+		            JOptionPane.INFORMATION_MESSAGE
+		        );
+		    }
+
+		  
+		    private void addLinkWithCopyButton(JPanel panel, String label, String link) {
+		       
+		        JPanel row = new JPanel();
+		        row.setLayout(new BoxLayout(row, javax.swing.BoxLayout.X_AXIS));
+		      
+		        JLabel linkLabel = new JLabel(label + ": " + link);
+		        linkLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT); 
+		        row.add(linkLabel);
+		      
+		        JButton copyButton = new JButton("Copiar");
+		        copyButton.setAlignmentX(JButton.RIGHT_ALIGNMENT); 
+		        copyButton.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent e) {
+		                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		                StringSelection selection = new StringSelection(link);
+		                clipboard.setContents(selection, null);		           
+		            }
+		        });
+
+		       
+		        row.add(Box.createHorizontalGlue()); 
+		        row.add(copyButton);		       
+		        panel.add(row);
+		        panel.add(Box.createVerticalStrut(10)); 
+		    }
+		});		
+		
 		mnNewMenu.add(mntmNewMenuItem);
 	}
 
